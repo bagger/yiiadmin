@@ -21,6 +21,7 @@ class YiiadminModule extends CWebModule
     public $password;   
     public $registerModels=array();
     public $excludeModels=array();
+    public $title='Yii Administration';
 
 	public function init()
 	{
