@@ -34,7 +34,7 @@ class ManageModelController extends YAdminController
 	 * @access protected
 	 * @return void
 	 */
-	protected function redirectUser($model_name,$pk)
+	public function redirectUser($model_name,$pk)
 	{
 		if ($_POST['_save'])
 			$this->redirect($this->createUrl('manageModel/list',array('model_name'=>$model_name)));  
