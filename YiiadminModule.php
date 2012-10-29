@@ -106,13 +106,12 @@ class YiiadminModule extends CWebModule
     /**
      * Загрузка модели
      * 
-     * @param string $name 
+     * @param string $model
      * @access public
      * @return object
      */
-    public function loadModel($name=null)
+    public function loadModel($model)
     {
-        $model= $name ? $name : (string)$_GET['model_name'];
 	if(!$model) throw new CException('Model not found');
         $this->model=new $model;
         return $this->model;
