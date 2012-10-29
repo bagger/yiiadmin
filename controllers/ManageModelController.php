@@ -27,6 +27,17 @@ class ManageModelController extends YAdminController
 			    );
 	}
 
+	protected function beforeAction(CAction $action) 
+	{
+		$model_name = isset($_GET['model_name']) ? $_GET['model_name'] : false;
+		if(!$model_name && $action->id == 'index') return;
+
+                $model=$this->module->loadModel($model_name);
+		if(!$model->actionAvailable($action->id)) 
+			throw new CException('Action is not allowed for model '.$model_name);
+		return parent::beforeAction($action);
+	}
+
 	/**
 	 * Redirect after editing model data.
 	 * 

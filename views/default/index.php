@@ -8,12 +8,16 @@ $this->pageTitle=$title;
             <div class="row"> 
                 <a href="#"><?php echo CHtml::link($this->module->getModelNamePlural($m),$this->createUrl('manageModel/list',array('model_name'=>$m))); ?></a> 
                 <ul class="actions"> 
+	<?php if($this->module->loadModel($m)->actionAvailable('create')) { ?>
                     <li class="add-link">
                     <?php echo CHtml::link(YiiadminModule::t('Создать'),$this->createUrl('manageModel/create',array('model_name'=>$m))); ?>
-                    <li> 
+                    </li> 
+	<?}?>
+	<?php if($this->module->loadModel($m)->actionAvailable('list')) { ?>
                     <li class="change-link">
                     <?php echo CHtml::link(YiiadminModule::t('Изменить'),$this->createUrl('manageModel/list',array('model_name'=>$m))); ?> 
                     </li> 
+	<?}?>
                 </ul> 
             </div>
         <?php endforeach; ?>

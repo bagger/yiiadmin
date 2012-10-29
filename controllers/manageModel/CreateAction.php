@@ -8,9 +8,8 @@ class CreateAction extends CAction
 	 * @access public
 	 * @return void
 	 */
-	public function run()
+	public function run($model_name)
 	{
-		$model_name=(string)$_GET['model_name']; 
 		$model=$this->controller->module->loadModel($model_name);
 
 		if (Yii::app()->request->isPostRequest)
