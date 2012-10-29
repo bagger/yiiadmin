@@ -7,6 +7,7 @@ class UploadAction extends CAction
 
 		if(isset($_GET['type']) && $_GET['type'] == 'image') {
 			$dir = YiiBase::getPathOfAlias($this->controller->module->imagesUploadDir);
+			$webroot = YiiBase::getPathOfAlias('webroot');
 
 			$_FILES['file']['type'] = strtolower($_FILES['file']['type']);
 
@@ -20,11 +21,13 @@ class UploadAction extends CAction
 				$fname = md5(date('YmdHis')).'.jpg';
 				$file = $dir.'/'.$fname;
 
+				$rel = mb_substr($file,mb_strlen($webroot),mb_strlen($file)-1);
+
 				// copying
 				move_uploaded_file($_FILES['file']['tmp_name'], $file);
 
 				echo stripslashes(json_encode(array(
-						'filelink' => $file
+						'filelink' => $rel
 				)));
 
 			} else {
