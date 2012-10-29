@@ -2,9 +2,18 @@
     $this->pageTitle=$title;
 
     $cs=Yii::app()->getClientScript();
-    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce/jscripts/tiny_mce/tiny_mce.js');
-    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce/jscripts/tiny_mce/jquery.tinymce.js'); 
-    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce_setup/tinymce_setup.js');
+    if($this->module->wysiwygType == 'redactor') { 
+            $cs->registerCssFile($this->module->assetsUrl.'/redactor/redactor/css/redactor.css');
+	    $cs->registerScript('redactor-jq', '
+                    var glob_imageUpload = "'.CHtml::normalizeUrl(array('manageModel/upload','type'=>'image')).'";
+            ',CClientScript::POS_HEAD);
+            $cs->registerScriptFile($this->module->assetsUrl.'/redactor/redactor/redactor.js');
+            $cs->registerScriptFile($this->module->assetsUrl.'/redactor_setup/redactor_setup.js');
+    } else {
+	    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce/jscripts/tiny_mce/tiny_mce.js');
+	    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce/jscripts/tiny_mce/jquery.tinymce.js'); 
+	    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce_setup/tinymce_setup.js');
+    }
 
     foreach ($model->rules() as $rule)
     {

@@ -23,6 +23,7 @@ class ManageModelController extends YAdminController
 				'create'  => 'yiiadmin.controllers.manageModel.CreateAction',
 				'update'  => 'yiiadmin.controllers.manageModel.UpdateAction',
 				'delete'  => 'yiiadmin.controllers.manageModel.DeleteAction',
+				'upload'  => 'yiiadmin.controllers.manageModel.UploadAction',
 			    );
 	}
 

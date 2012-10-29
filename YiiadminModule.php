@@ -22,6 +22,8 @@ class YiiadminModule extends CWebModule
     public $registerModels=array();
     public $excludeModels=array();
     public $title='Yii Administration';
+    public $wysiwygType='tinymce';
+    public $imagesUploadDir='webroot.assets.images';
 
 	public function init()
 	{
@@ -124,7 +126,7 @@ class YiiadminModule extends CWebModule
         switch ($widget)
         {
             case 'textArea';
-                return $form->textArea($model,$attribute,array('class'=>'vTextField'));
+                return $form->textArea($model,$attribute,array('class'=>'vTextArea'));
             break;
             
             case 'textField';
