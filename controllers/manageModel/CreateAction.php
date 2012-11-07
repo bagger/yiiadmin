@@ -21,7 +21,7 @@ class CreateAction extends CAction
 			{
 				$model->save();
 				Yii::app()->user->setFlash('flashMessage', YiiadminModule::t('Запись создана.'));
-				$this->controller->redirectUser($model_name,$primaryKey);
+				$this->controller->redirectUser($model_name,$model->primaryKey);
 			}
 		}
 
