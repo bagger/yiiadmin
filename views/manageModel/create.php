@@ -62,7 +62,7 @@
                     
 <div class="module footer">
     <ul class="submit-row">
-    <?php if (!$model->isNewRecord): ?>
+    <?php if (!$model->isNewRecord && $model->actionAvailable('delete')): ?>
         <li class="left delete-link-container">
             <?php echo CHtml::link(YiiadminModule::t('Удалить'),$this->createUrl('manageModel/delete',array(
                     'model_name'=>get_class($model),
@@ -77,9 +77,11 @@
         <li class="submit-button-container">
             <input type="submit" value="<?php echo YiiadminModule::t('Сохранить');?>" class="default" name="_save">
         </li>
+        <?if ($model->actionAvailable('create')) { ?>
         <li class="submit-button-container">
             <input type="submit" value="<?php echo YiiadminModule::t('Сохранить и создать новую запись');?>" name="_addanother">
         </li>
+        <? } ?>
         <li class="submit-button-container">
             <input type="submit" value="<?php echo YiiadminModule::t('Сохранить и редактировать');?>" name="_continue">
         </li> 
