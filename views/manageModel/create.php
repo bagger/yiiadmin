@@ -3,17 +3,18 @@
 
     $cs=Yii::app()->getClientScript();
     if($this->module->wysiwygType == 'redactor') { 
-            $cs->registerCssFile($this->module->assetsUrl.'/redactor/redactor/css/redactor.css');
-	    $cs->registerScript('redactor-jq', '
-                    var glob_imageUpload = "'.CHtml::normalizeUrl(array('manageModel/upload','type'=>'image')).'";
-            ',CClientScript::POS_HEAD);
-            $cs->registerScriptFile($this->module->assetsUrl.'/redactor/redactor/redactor.js');
-            $cs->registerScriptFile($this->module->assetsUrl.'/redactor_setup/redactor_setup.js');
+        $cs->registerCssFile($this->module->assetsUrl.'/redactor/redactor/css/redactor.css');
+        $cs->registerScript('redactor-jq', '
+                var glob_imageUpload = "'.CHtml::normalizeUrl(array('manageModel/upload','type'=>'image')).'";
+                ',CClientScript::POS_HEAD);
+        $cs->registerScriptFile($this->module->assetsUrl.'/redactor/redactor/redactor.js');
+        $cs->registerScriptFile($this->module->assetsUrl.'/redactor_setup/redactor_setup.js');
     } else {
 	    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce/jscripts/tiny_mce/tiny_mce.js');
 	    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce/jscripts/tiny_mce/jquery.tinymce.js'); 
 	    $cs->registerScriptFile($this->module->assetsUrl.'/tinymce_setup/tinymce_setup.js');
     }
+
 
     foreach ($model->rules() as $rule)
     {
@@ -41,8 +42,10 @@
         <fieldset class="module wide">
         <?php  
             foreach ($attributes as $attribute): 
-            if( $model->tableSchema->columns[$attribute]->isPrimaryKey===true)
-                continue;
+                if( $model->tableSchema->columns[$attribute]->isPrimaryKey===true)
+                 continue;
+                if( !$model->attributeActionAvailable($attribute,'update'))
+                 continue;
         ?>
         <div class="row <?php if($model->getError($attribute)) echo 'errors'; ?>">
             <div>
