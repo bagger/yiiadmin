@@ -122,9 +122,12 @@ class YiiadminModule extends CWebModule
         $dbType=$model->tableSchema->columns[$attribute]->dbType;
         
         $widget=$this->getAttributeWidget($attribute); 
-        
+
         switch ($widget)
         {
+            case 'filePath';
+                return $form->fileField($model,$attribute,array('class'=>'vFileBrowseField'));
+            break;
             case 'textArea';
                 return $form->textArea($model,$attribute,array('class'=>'vTextArea'));
             break;
