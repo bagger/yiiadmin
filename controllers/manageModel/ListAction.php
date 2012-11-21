@@ -51,7 +51,7 @@ class ListAction extends CAction
 		$data2=array(
 			'id'=>'objects-grid',
 			'dataProvider'=>$model->search(),
-			'filter'=>$model,
+			'filter'=>$this->controller->module->filter? $model : null,
 			'itemsCssClass'=>'table',
 			'enablePagination'=>true,
 			'pagerCssClass'=>'pagination',
