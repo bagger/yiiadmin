@@ -3,17 +3,38 @@
 abstract class YiiAdminAbstract extends CActiveRecord
 {
 
+    protected $_attributeType = array();
+
 	public function actionAvailable($action)
 	{
-		$action_prop = 'admin_deny'.ucfirst($action);
+		$action_prop = 'admin_denyAction'.ucfirst($action);
 		if(isset($this->{$action_prop}) && $this->{$action_prop}) return false;
 		return true;
+	}
+
+	public function attributeActionAvailable($attr,$action)
+	{
+		$action_prop = 'admin_deny'.ucfirst($attr).'Action'.ucfirst($action);
+		if(isset($this->{$action_prop}) && $this->{$action_prop}) return false;
+		return true;
+	}
+
+	public function actionAttributes($action)
+	{
+		$method = 'attributes'.ucfirst($action);
+		if(!method_exists($this,$method)) return $this->tableSchema->columns;
+		$attrs = $this->{$method}();
+		$ret = array();
+		foreach($attrs as $attr) {
+			if(isset($this->tableSchema->columns[$attr])) $ret[] = $this->tableSchema->columns[$attr];
+		}
+		return $ret;
 	}
 
 	public function adminSearch()
 	{
 		$ret = array();
-		$cols = $this->tableSchema->columns;
+		$cols = $this->actionAttributes('list');
 		foreach($cols as $name=>$data) {
 			if($data->dbType == 'text' || $data->dbType == 'blob') {
 				$ret[] = array('name'=>$data->name,'value'=>'mb_substr(strip_tags($data->'.$data->name.'),0,100)."..."');
@@ -44,7 +65,33 @@ abstract class YiiAdminAbstract extends CActiveRecord
 				$ret[] = array($data->name,'boolean');
 			}
 		}
-		return $ret;
-	}
+        foreach($ret as $idx=>$el) {
+            if($type = $this->_getAttributeType($el[0])) {        
+                unset($ret[$idx]);
+            }
+        }
+
+        foreach($this->_getAttributeTypes() as $name=>$type) {
+            $type = array_merge(array($name),$type);
+            $ret[] = $type;
+        }
+
+        return $ret;
+    }
+
+    public function _getAttributeTypes() 
+    {
+        return $this->_attributeType;
+    }
+    public function _getAttributeType($name) 
+    {
+        return isset($this->_attributeType[$name]) ? $this->_attributeType[$name] : null;
+    }
+
+    public function _setAttributeType($name,$type) 
+    {
+        if(!is_array($type)) $type=(array)$type;
+        $this->_attributeType[$name] = $type;
+    }
 
 }
