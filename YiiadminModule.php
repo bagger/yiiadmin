@@ -19,6 +19,7 @@ class YiiadminModule extends CWebModule
     public static $fileExt='.php';
     private $controller;
     public $password;   
+    public $filter;   
     public $registerModels=array();
     public $excludeModels=array();
     public $title='Yii Administration';
