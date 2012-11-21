@@ -27,15 +27,17 @@ class ManageModelController extends YAdminController
 			    );
 	}
 
-	protected function beforeAction(CAction $action) 
+	protected function beforeAction($action) 
 	{
-		$model_name = isset($_GET['model_name']) ? $_GET['model_name'] : false;
-		if(!$model_name && $action->id == 'index') return;
+        do { 
+            $model_name = isset($_GET['model_name']) ? $_GET['model_name'] : false;
+            if(!$model_name) break;
 
-                $model=$this->module->loadModel($model_name);
-		if(!$model->actionAvailable($action->id)) 
-			throw new CException('Action is not allowed for model '.$model_name);
-		return parent::beforeAction($action);
+            $model=$this->module->loadModel($model_name);
+            if($model && !$model->actionAvailable($action->id)) 
+                throw new CException('Action "'.$action->id.'" is not allowed for model '.$model_name);
+        } while(false);
+        return parent::beforeAction($action);
 	}
 
 	/**
