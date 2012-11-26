@@ -24,6 +24,7 @@ class YiiadminModule extends CWebModule
     public $excludeModels=array();
     public $title='Yii Administration';
     public $wysiwygType='tinymce';
+    public $logoUrl=null;
     public $imagesUploadDir='webroot.assets.images';
 
 	public function init()

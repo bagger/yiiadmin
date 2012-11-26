@@ -14,8 +14,10 @@ $cs->registerCssFile($baseUrl.'/css/base.css');
     <div id="container"> 
 
 <div id="header"> 
-    <div class="branding">&nbsp;</div> 
-    <div class="admin-title"><?php echo $this->module->title?></div> 
+    <div class="branding"></div> 
+    <div class="admin-title">
+        <?php echo $this->module->title?>
+    </div> 
     
         <ul id="user-tools"> 
             <!--<li><a href="#" class="user-options-handler collapse-handler">username</a></li>-->
@@ -23,6 +25,9 @@ $cs->registerCssFile($baseUrl.'/css/base.css');
         </ul> 
 </div> 
  
+    <?if($this->module->logoUrl) {?>
+        <img style="padding-top: 10px" src="<?=$this->module->logoUrl?>" alt=" " />
+    <?}?>
     <?php 
         $message=Yii::app()->user->getFlash('flashMessage');
         if ($message): 
