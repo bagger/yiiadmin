@@ -15,7 +15,11 @@ $this->pageTitle=$title;
 	<?}?>
 	<?php if($this->module->loadModel($m)->actionAvailable('list')) { ?>
                     <li class="change-link">
-                    <?php echo CHtml::link(YiiadminModule::t('Изменить'),$this->createUrl('manageModel/list',array('model_name'=>$m))); ?> 
+                    <?if(isset($this->module->loadModel($m)->admin_hasOneItem) && $this->module->loadModel($m)->admin_hasOneItem) {?>
+                        <?php echo CHtml::link(YiiadminModule::t('Изменить'),$this->createUrl('manageModel/update',array('model_name'=>$m,'pk'=>$this->module->loadModel($m)->find()->primaryKey))); ?> 
+                    <?} else {?>
+                        <?php echo CHtml::link(YiiadminModule::t('Изменить'),$this->createUrl('manageModel/list',array('model_name'=>$m))); ?> 
+                    <?} ?>
                     </li> 
 	<?}?>
                 </ul> 

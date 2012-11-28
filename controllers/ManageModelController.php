@@ -50,8 +50,11 @@ class ManageModelController extends YAdminController
 	 */
 	public function redirectUser($model_name,$pk)
 	{
-		if ($_POST['_save'])
-			$this->redirect($this->createUrl('manageModel/list',array('model_name'=>$model_name)));  
+		if ($_POST['_save']) {
+            if(isset($this->module->loadModel($model_name)->admin_hasOneItem) && $this->module->loadModel($model_name)->admin_hasOneItem) {
+                $this->redirect('/yiiadmin');  
+            } else $this->redirect($this->createUrl('manageModel/list',array('model_name'=>$model_name)));  
+        }
 		if ($_POST['_addanother'])
 		{
 			Yii::app()->user->setFlash('flashMessage', YiiadminModule::t('Изменения сохранены. Можете создать новую запись.')); 
