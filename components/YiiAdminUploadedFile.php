@@ -10,7 +10,7 @@ class YiiAdminUploadedFile extends CUploadedFile
     {
         parent::__construct($name,$tempName,$type,$size,$error);
         $this->_savedPath = '/assets/uploaded/'.md5(uniqid()).($this->getExtensionName()? '.'.$this->getExtensionName() : '');
-        $this->saveAs(Yii::getPathOfAlias('webroot').'/'.$this->_savedPath);
+        $this->saveAs(Yii::getPathOfAlias('webroot').$this->_savedPath);
     }
 
 	/**
