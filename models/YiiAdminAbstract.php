@@ -5,10 +5,20 @@ abstract class YiiAdminAbstract extends CActiveRecord
 
     protected $_attributeType = array();
 
-	public function actionAvailable($action)
+	public function actionAvailable($action,$pk=false)
 	{
 		$action_prop = 'admin_denyAction'.ucfirst($action);
 		if(isset($this->{$action_prop}) && $this->{$action_prop}) return false;
+
+        if($pk) { 
+            $action_prop .= 'Idx';
+            if(isset($this->{$action_prop}) && $this->{$action_prop}) {
+                $idx_list = (array)$this->{$action_prop};
+                if(in_array($pk,$idx_list)) return false;
+            }
+        }
+
+
 		return true;
 	}
 
@@ -44,9 +54,6 @@ abstract class YiiAdminAbstract extends CActiveRecord
 		}
 		return array(
 			'columns'=>$ret
-		);
-		return array(
-			'columns'=> array_keys($this->tableSchema->columns)
 		);
 	}
 

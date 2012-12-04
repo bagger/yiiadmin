@@ -32,9 +32,10 @@ class ManageModelController extends YAdminController
         do { 
             $model_name = isset($_GET['model_name']) ? $_GET['model_name'] : false;
             if(!$model_name) break;
-
+            $pk = isset($_GET['pk']) ? $_GET['pk'] : false;
+            
             $model=$this->module->loadModel($model_name);
-            if($model && !$model->actionAvailable($action->id)) 
+            if($model && !$model->actionAvailable($action->id,$pk)) 
                 throw new CException('Action "'.$action->id.'" is not allowed for model '.$model_name);
         } while(false);
         return parent::beforeAction($action);
