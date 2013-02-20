@@ -4,6 +4,7 @@ abstract class YiiAdminAbstract extends CActiveRecord
 {
 
     protected $_attributeType = array();
+    protected $adminOrderBy;
 
 	public function actionAvailable($action,$pk=false)
 	{
@@ -52,9 +53,21 @@ abstract class YiiAdminAbstract extends CActiveRecord
 				$ret[] = $data->name;
 			}
 		}
-		return array(
+
+        $data = array(
 			'columns'=>$ret
 		);
+
+        return $data;
+
+        if($this->adminOrderBy) {
+            $dataProv = $this->search();
+            $dataProv->getSort()->setOrderBy = $this->adminOrderBy;
+        }
+        $data['dataProvider'] = $dataProv;
+
+        return $data;
+        
 	}
 
 	public function attributeWidgets()
@@ -63,7 +76,7 @@ abstract class YiiAdminAbstract extends CActiveRecord
 		$cols = $this->tableSchema->columns;
 		foreach($cols as $name=>$data) {
 			if($data->dbType == 'date') {
-				$ret[] = array($data->name,'calendar','options'=>array('dateFormat'=>'yyyy-mm-dd'));
+				$ret[] = array($data->name,'calendar','options'=>array('dateFormat'=>'yy-mm-dd'));
 			}
 			if($data->dbType == 'text') {
 				$ret[] = array($data->name,'textArea');

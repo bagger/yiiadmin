@@ -127,21 +127,16 @@ class YiiadminModule extends CWebModule
 
         switch ($widget)
         {
+            case 'imagePath';
+                return ($model->$attribute?CHtml::image($model->$attribute,'',array('style'=>'max-width:150px;max-height:150px;vertical-align: middle')):'').$form->fileField($model,$attribute,array('class'=>'vFileBrowseField'));
             case 'filePath';
                 return $form->fileField($model,$attribute,array('class'=>'vFileBrowseField'));
-            break;
             case 'textArea';
                 return $form->textArea($model,$attribute,array('class'=>'vTextArea'));
-            break;
-            
             case 'textField';
                 return $form->textField($model,$attribute,array('class'=>'vTextField'));
-            break;
-
             case 'dropDownList':
                 return $form->dropDownList($model,$attribute,$this->getAttributeChoices($attribute),array('empty'=>'- select -'));
-            break;
-
             case 'calendar': 
                 $widgetData=array_slice($this->getAttributeData($attribute),2);
                 
@@ -163,11 +158,8 @@ class YiiadminModule extends CWebModule
 
             case 'boolean':
                 return $form->checkBox($model,$attribute); 
-            break;
-
             default: 
                 return $form->textField($model,$attribute,array('class'=>'vTextField')); 
-            break;
         }
     }
 

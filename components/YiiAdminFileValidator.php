@@ -34,8 +34,10 @@ class YiiAdminFileValidator extends CFileValidator
 			if(!$file instanceof YiiAdminUploadedFile)
 			{
 				$file = YiiAdminUploadedFile::getInstance($object, $attribute);
-				if(null===$file)
+				if(null===$file) {
+                    echo '123';
 					return $this->emptyAttribute($object, $attribute);
+                }
 			}
 			$this->validateFile($object, $attribute, $file);
             $object->$attribute = $file->__toString();
